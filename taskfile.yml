@@ -1,0 +1,61 @@
+# ./Taskfile.yaml
+# See: https://taskfile.dev/api/
+version: "3"
+
+dotenv:
+  [ '.env' ]
+
+vars:
+  LOCAL_BIN: "${PWD}/bin/"
+  LOCAL_MIGRATION_DIR: "${MIGRATION_DIR}"
+  LOCAL_MIGRATION_DSN: "\"host=localhost port=${POSTGRES_PORT} dbname=${POSTGRES_DB_NAME} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} sslmode=disable\""
+
+tasks:
+  install-deps:
+    - GOBIN={{.LOCAL_BIN}} go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+    - GOBIN={{.LOCAL_BIN}} go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+    - GOBIN={{.LOCAL_BIN}} go install github.com/pressly/goose/v3/cmd/goose@latest
+    - GOBIN={{.LOCAL_BIN}} go install github.com/gojuno/minimock/v3/cmd/minimock@latest
+
+  generate:
+    - protoc --proto_path api/auth_v1 --go_out=./pkg/auth_v1/
+      --go_opt=paths=source_relative --go-grpc_out=./pkg/auth_v1/
+      --go-grpc_opt=paths=source_relative api/auth_v1/auth.proto
+
+  migration-status:
+    goose -dir {{.LOCAL_MIGRATION_DIR}} postgres {{.LOCAL_MIGRATION_DSN}} status -v
+
+  migration-up:
+    goose -dir {{.LOCAL_MIGRATION_DIR}} postgres {{.LOCAL_MIGRATION_DSN}} up -v
+
+  migration-down:
+    goose -dir {{.LOCAL_MIGRATION_DIR}} postgres {{.LOCAL_MIGRATION_DSN}} down -v
+
+  migration-create-*:
+    vars:
+      MIGRATION_NAME: '{{index .MATCH 0 }}'
+    cmds:
+      - goose -dir {{.LOCAL_MIGRATION_DIR}} postgres {{.LOCAL_MIGRATION_DSN}} create {{ .MIGRATION_NAME}} sql
+
+  lint:
+    golangci-lint run ./...
+
+  docker-build-and-push:
+    cmds:
+      - docker build -t ${DOCKER_REGISTRY}auth-v0.0.1 .
+      - docker login -u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY}
+      - docker push ${DOCKER_REGISTRY}auth-v0.0.1
+
+  test:
+    cmds:
+      - go clean -testcache
+      - go test ./... -covermode count -coverpkg=github.com/lookandhate/course_auth/internal/service/...,github.com/lookandhate/course_auth/internal/service/ -count 5
+  test-coverage:
+    cmds:
+      - go clean -testcache
+      - go test ./... -coverprofile=coverage.tmp.out -covermode count -coverpkg=github.com/lookandhate/course_auth/internal/service/...,github.com/lookandhate/course_auth/internal/api/... -count 5
+      - grep -v 'mocks\|config' coverage.tmp.out  > coverage.out
+      - rm coverage.tmp.out
+      - go tool cover -html=coverage.out;
+      - go tool cover -func=./coverage.out | grep "total";
+      - grep -sqFx "/coverage.out" .gitignore || echo "/coverage.out" >> .gitignore
