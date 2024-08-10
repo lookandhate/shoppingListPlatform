@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/lookandhate/course_platform_lib/pkg/db/db"
+	"github.com/lookandhate/course_platform_lib/pkg/db"
 )
 
 type key string

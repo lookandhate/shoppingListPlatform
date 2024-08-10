@@ -3,11 +3,11 @@ package transaction
 import (
 	"context"
 
+	"github.com/lookandhate/course_platform_lib/pkg/db"
+	"github.com/lookandhate/course_platform_lib/pkg/db/pg"
 	"github.com/pkg/errors"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/lookandhate/course_auth/internal/client/db"
-	"github.com/lookandhate/course_auth/internal/client/db/pg"
 )
 
 type manager struct {
