@@ -6,7 +6,6 @@ require (
 	github.com/georgysavva/scany/v2 v2.1.3
 	github.com/gojuno/minimock/v3 v3.3.14
 	github.com/jackc/pgx/v5 v5.6.0
-	github.com/lookandhate/course_auth v0.0.0-20240806115939-60d120f610d7
 	github.com/pkg/errors v0.9.1
 )
 
