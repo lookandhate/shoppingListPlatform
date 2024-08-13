@@ -24,7 +24,8 @@ func NewClient(pool *redis.Pool, connectionTimeout time.Duration) *Client {
 
 func (c *Client) HashSet(ctx context.Context, key string, values interface{}) error {
 	err := c.execute(ctx, func(ctx context.Context, conn redis.Conn) error {
-		_, txErr := conn.Do("HSET", redis.Args{key}.AddFlat(values)...)
+		args := redis.Args{key}.AddFlat(values)
+		_, txErr := conn.Do("HSET", args...)
 		return txErr
 	})
 	if err != nil {
