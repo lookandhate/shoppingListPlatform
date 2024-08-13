@@ -2,6 +2,7 @@ package redis
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -35,7 +36,7 @@ func (c *Client) HashSet(ctx context.Context, key string, values interface{}) er
 
 func (c *Client) Set(ctx context.Context, key string, value interface{}) error {
 	err := c.execute(ctx, func(ctx context.Context, conn redis.Conn) error {
-		_, txErr := conn.Do("SET", redis.Args{key}.Add(value))
+		_, txErr := conn.Do("SET", redis.Args{key}.Add(value)...)
 		return txErr
 	})
 	if err != nil {
@@ -137,6 +138,7 @@ func (c *Client) getConnect(ctx context.Context) (redis.Conn, error) {
 	conn, err := c.pool.GetContext(getConnTimeoutCtx)
 	if err != nil {
 		_ = conn.Close()
+		fmt.Printf("\n%v error when GetContext\n", err)
 		return nil, err
 	}
 
