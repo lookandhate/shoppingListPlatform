@@ -3,7 +3,7 @@ package kafka
 import (
 	"context"
 
-	"github.com/lookandhate/course_platform_lib/pkg/message_queue/kafka/client/consumer"
+	"github.com/cum4ati/shoppingListPlatform/pkg/message_queue/kafka/client/consumer"
 )
 
 type Consumer interface {

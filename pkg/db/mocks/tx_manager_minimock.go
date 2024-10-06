@@ -2,7 +2,7 @@
 
 package mocks
 
-//go:generate minimock -i github.com/lookandhate/course_platform_lib/pkg/db.TxManager -o tx_manager_minimock.go -n TxManagerMock -p mocks
+//go:generate minimock -i github.com/cum4ati/shoppingListPlatform/pkg/db.TxManager -o tx_manager_minimock.go -n TxManagerMock -p mocks
 
 import (
 	"context"
@@ -10,8 +10,8 @@ import (
 	mm_atomic "sync/atomic"
 	mm_time "time"
 
+	mm_db "github.com/cum4ati/shoppingListPlatform/pkg/db"
 	"github.com/gojuno/minimock/v3"
-	mm_db "github.com/lookandhate/course_platform_lib/pkg/db"
 )
 
 // TxManagerMock implements db.TxManager

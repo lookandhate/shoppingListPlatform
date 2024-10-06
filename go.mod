@@ -1,4 +1,4 @@
-module github.com/lookandhate/course_platform_lib
+module github.com/cum4ati/shoppingListPlatform
 
 go 1.22
 

@@ -49,11 +49,11 @@ tasks:
   test:
     cmds:
       - go clean -testcache
-      - go test ./... -covermode count -coverpkg=github.com/lookandhate/course_auth/internal/service/...,github.com/lookandhate/course_auth/internal/service/ -count 5
+      - go test ./... -covermode count -coverpkg=github.com/cum4ati/shoppingListPlatform/internal/service/...,github.com/cum4ati/shoppingListPlatform/internal/service/ -count 5
   test-coverage:
     cmds:
       - go clean -testcache
-      - go test ./... -coverprofile=coverage.tmp.out -covermode count -coverpkg=github.com/lookandhate/course_auth/internal/service/...,github.com/lookandhate/course_auth/internal/api/... -count 5
+      - go test ./... -coverprofile=coverage.tmp.out -covermode count -coverpkg=github.com/cum4ati/shoppingListPlatform/internal/service/...,github.com/cum4ati/shoppingListPlatform/internal/api/... -count 5
       - grep -v 'mocks\|config' coverage.tmp.out  > coverage.out
       - rm coverage.tmp.out
       - go tool cover -html=coverage.out;

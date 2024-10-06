@@ -3,8 +3,8 @@ package pg
 import (
 	"context"
 
+	"github.com/cum4ati/shoppingListPlatform/pkg/db"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/lookandhate/course_platform_lib/pkg/db"
 	"github.com/pkg/errors"
 )
 

@@ -3,8 +3,8 @@ package transaction
 import (
 	"context"
 
-	"github.com/lookandhate/course_platform_lib/pkg/db"
-	"github.com/lookandhate/course_platform_lib/pkg/db/pg"
+	"github.com/cum4ati/shoppingListPlatform/pkg/db"
+	"github.com/cum4ati/shoppingListPlatform/pkg/db/pg"
 	"github.com/pkg/errors"
 
 	"github.com/jackc/pgx/v5"
