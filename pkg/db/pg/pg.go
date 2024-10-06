@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cum4ati/shoppingListPlatform/pkg/db"
 	"github.com/georgysavva/scany/v2/pgxscan"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/lookandhate/shoppingListPlatform/pkg/db"
 )
 
 type key string

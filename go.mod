@@ -1,4 +1,4 @@
-module github.com/cum4ati/shoppingListPlatform
+module github.com/lookandhate/shoppingListPlatform
 
 go 1.22
 
